@@ -133,9 +133,7 @@ cd web && mvn spring-boot:run
 ```
 
 How to open:
-```
 http://localhost:8090/
-```
 
 ## Data migration
 
