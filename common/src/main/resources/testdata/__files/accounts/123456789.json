@@ -1,0 +1,6 @@
+{
+  "id": "{{request.path.[1]}}",
+  "owner": "Super duper company",
+  "balance": 750,
+  "created": "12-10-2007"
+}

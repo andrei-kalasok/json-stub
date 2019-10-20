@@ -40,3 +40,6 @@ target
 ### OS Generated files ###
 .DS_Store
 .DS_Store?
+
+### Mysql docker container local data
+attorney-data/*
