@@ -25,26 +25,28 @@ import java.util.stream.Stream;
 public class V2__Initial_data extends BaseJavaMigration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(V2__Initial_data.class);
+    private static final String PATH = "common/src/main/resources/testdata/__files/";
+    private static final String MODULE_PATH = "../common/src/main/resources/testdata/__files/";
     private static final String REQUESTED_ID_PLACEHOLDER = "{{request.path.[1]}}";
 
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     @Override
     public void migrate(Context context) {
-        migrateJsonToDB("common/src/main/resources/testdata/__files/users", UserDto.class,
+        migrateJsonToDB("users", UserDto.class,
                 SpringUtility.getBean(UserMapper.class), SpringUtility.getBean(UserRepository.class));
-        migrateJsonToDB("common/src/main/resources/testdata/__files/accounts", AccountDto.class,
+        migrateJsonToDB("accounts", AccountDto.class,
                 SpringUtility.getBean(AccountMapper.class), SpringUtility.getBean(AccountRepository.class));
-        migrateJsonToDB("common/src/main/resources/testdata/__files/credit-card", CreditCardDto.class,
+        migrateJsonToDB("credit-card", CreditCardDto.class,
                 SpringUtility.getBean(CreditCardMapper.class), SpringUtility.getBean(CreditCardRepository.class));
-        migrateJsonToDB("common/src/main/resources/testdata/__files/debit-card", DebitCardDto.class,
+        migrateJsonToDB("debit-card", DebitCardDto.class,
                 SpringUtility.getBean(DebitCardMapper.class), SpringUtility.getBean(DebitCardRepository.class));
-        migrateJsonToDB("common/src/main/resources/testdata/__files/poa", PoaDto.class,
+        migrateJsonToDB("poa", PoaDto.class,
                 SpringUtility.getBean(PoaMapper.class), SpringUtility.getBean(PoaRepository.class));
     }
 
     private <E, D> void migrateJsonToDB(String path, Class<D> valueType, AbstractMapper<E, D> mapper, CrudRepository<E, ?> repository) {
-        try (Stream<Path> walk = Files.walk(Paths.get(path))) {
+        try (Stream<Path> walk = Files.walk(Paths.get(fullPath(path)))) {
             List<String> result = walk.map(Path::toString)
                     .filter(f -> f.endsWith(".json")).collect(Collectors.toList());
 
@@ -52,6 +54,12 @@ public class V2__Initial_data extends BaseJavaMigration {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private String fullPath(String path) {
+        return Files.exists(Paths.get(PATH))
+                ? PATH + path
+                : MODULE_PATH + path;
     }
 
     private <E, D> void processFile(String filePath, Class<D> valueType, AbstractMapper<E, D> mapper, CrudRepository<E, ?> repository) {
