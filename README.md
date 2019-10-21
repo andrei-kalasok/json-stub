@@ -5,10 +5,6 @@ This awesome web service provides REST API for accessing power of attorney infor
   - Account details (/accounts/{id})
   - Some developer might have made an error somewhere
 
-**To build and run:** use `mvn compile exec:java`
-**Application runs on:** http://localhost:8080
-**REST API documentation:** http://localhost:8080/swagger/
-
 # Exercise!
   - Build a REST API presenting aggregated information from different services
   - Only show data that a user is actually authorized for
@@ -45,15 +41,8 @@ During import the migrator builds authorization map based on following assumptio
 
 Build tool for building/testing/running project
 
-Build project:
-```
-mvn package
-```
-
-Test project
-```
-mvn test
-```
+**To build:** use `mvn package`
+**To build and run tests:** use `mvn package`
 
 ### Spring boot
 
@@ -77,7 +66,7 @@ Flyway is used for the initial DB migration:
 ### Docker 
 
 Docker is being used to start MySql DB local:
-`docker-compose up`
+**To start Mysql in docker:** `docker-compose up -d`
 
 Application data is persisted in mounted folder, `attorney-data` folder by default (can be modified in docker-compose.yml) 
 
@@ -102,11 +91,13 @@ Common module contains sharable Entity/Dto/Domain models, mappers, flyway migrat
 
 Rest API service (mail application) implementation of specified above Rest API
 
-How to run:
+**To run:**
 ```
 docker-compose up -d
 cd service && mvn spring-boot:run
 ```
+
+**Application runs on:** http://localhost:8080
 
 Query examples:
 ```
@@ -126,14 +117,13 @@ HTTP error list:
 
 Web application based on Spring + Thymeleaf. Auxiliary application to explore imported database (see common/src/main/resources/testdata/__files/users for users credentials)
 
-How to run:
+**To run:**
 ```
 docker-compose up -d
 cd web && mvn spring-boot:run
 ```
 
-How to open:
-http://localhost:8090/
+**Application runs on:** http://localhost:8090
 
 ## Data migration
 
