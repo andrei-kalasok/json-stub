@@ -41,7 +41,6 @@ During import the migrator builds authorization map based on following assumptio
 
 Build tool for building/testing/running project
 
-**To build:** use `mvn package`
 **To build and run tests:** use `mvn package`
 
 ### Spring boot
